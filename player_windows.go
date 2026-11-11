@@ -92,7 +92,7 @@ func (p *player) run(ctx context.Context, host uintptr) {
 		return
 	}
 	bindings.Close()
-	cmd := exec.CommandContext(ctx, path, "--no-config", "--idle=yes", "--keep-open=yes", "--force-window=yes", fmt.Sprintf("--wid=%d", host), "--input-ipc-server="+pipe, "--input-conf="+bindings.Name(), "--hwdec=auto-safe", "--vo=gpu-next", "--gpu-api=d3d11", "--osc=no", "--osd-level=0", "--input-default-bindings=no", "--input-vo-keyboard=yes", "--terminal=no", "--volume-max=100", "--demuxer-max-bytes=64MiB", "--demuxer-max-back-bytes=16MiB")
+	cmd := exec.CommandContext(ctx, path, "--no-config", "--idle=yes", "--keep-open=yes", "--force-window=yes", fmt.Sprintf("--wid=%d", host), "--input-ipc-server="+pipe, "--input-conf="+bindings.Name(), "--hwdec=auto-safe", "--vo=gpu-next", "--gpu-api=d3d11", "--osc=no", "--osd-level=0", "--input-default-bindings=no", "--input-vo-keyboard=yes", "--terminal=no", "--volume-max=300", "--demuxer-max-bytes=64MiB", "--demuxer-max-back-bytes=16MiB")
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 	if err = cmd.Start(); err != nil {
 		p.fail(err)

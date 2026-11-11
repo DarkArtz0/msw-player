@@ -41,19 +41,7 @@ func (a *app) subtitleTick() {
 			}
 		}
 	}
-	if !a.autoSubtitles || a.online.AutoChecked || !a.status.Loaded || a.status.TrackJSON == "" || a.current < 0 {
-		return
-	}
-	a.online.AutoChecked = true
-	for _, track := range subtitleTracks(a.status.TrackJSON) {
-		if sameLanguage(track.Lang, a.subtitleLanguage) {
-			a.send("set_property", "sid", track.ID)
-			a.online.Message = "Using " + a.subtitleLanguage + " captions."
-			return
-		}
-	}
-	a.subtitleQuery = videoSearchTitle(a.queue[a.current])
-	a.findSubtitles(true, nil)
+
 }
 func (a *app) subtitlePreferencesChanged() {
 	a.persist()
@@ -61,8 +49,7 @@ func (a *app) subtitlePreferencesChanged() {
 	a.online = subtitleDownloadState{}
 	if a.onlineOpen {
 		a.findSubtitles(false, nil)
-	} else if a.autoSubtitles {
-		a.subtitleTick()
+
 	}
 }
 func (a *app) subtitleClient() *subtitleService {

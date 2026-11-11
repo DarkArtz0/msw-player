@@ -75,7 +75,6 @@ type app struct {
 	cacheDir                                        string
 	transition                                      *openTransition
 	minPlaybackGeneration                           uint64
-	autoSubtitles                                   bool
 	online                                          subtitleDownloadState
 	subtitleService                                 *subtitleService
 	subtitleRequest                                 uint64
@@ -93,7 +92,7 @@ type app struct {
 }
 
 func newApp() *app {
-	return &app{current: -1, volume: 80, page: "library", subtitleID: "no", subtitleLanguage: "English", autoSubtitles: true, subtitleStyle: defaultSubtitleAppearance(), density: "Comfortable", history: map[string]bookmark{}, thumbs: map[string]*thumbnail{}, done: make(chan struct{})}
+	return &app{current: -1, volume: 80, page: "library", subtitleID: "no", subtitleLanguage: "English", subtitleStyle: defaultSubtitleAppearance(), density: "Comfortable", history: map[string]bookmark{}, thumbs: map[string]*thumbnail{}, done: make(chan struct{})}
 }
 
 // optimistic shows a choice the user just made until mpv reports it, so a
@@ -280,9 +279,6 @@ func main() {
 	}
 	a.cacheDir = filepath.Join(base, "thumbnails")
 	a.subtitlesDir = filepath.Join(base, "subtitles")
-	if prefs.AutoSubtitles != nil {
-		a.autoSubtitles = *prefs.AutoSubtitles
-	}
 	if _, ok := languageCodes[prefs.SubtitleLanguage]; ok {
 		a.subtitleLanguage = prefs.SubtitleLanguage
 	}

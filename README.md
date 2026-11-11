@@ -1,4 +1,4 @@
-# mswplayr
+# mswplayr — manual-network fork
 
 A native Windows video player built with Go, MyGo, and mpv. The interface takes its typography and quiet light/dark palette from MiniMuse.
 
@@ -45,7 +45,9 @@ The chapter button lists embedded chapter names and timestamps, highlights the c
 
 **Subtitle appearance** is available from the caption menu or Settings. Font, size, text color, outline, shadow, vertical position, bold text, and a dark background are applied live and saved. The Reset button restores defaults. Text styling does not change image-based captions; styled ASS/SSA captions keep their authored styling unless **Apply to styled ASS/SSA captions** is enabled.
 
-Subtitles are found, downloaded, cached, and loaded entirely inside the app. Automatic loading is enabled by default: the player uses an existing track in your preferred language first, then a previously downloaded subtitle, then searches online. Settings lets you change the language or turn automatic downloads off. Choosing **Off** or a local track stops any pending automatic request for that video.
+Online subtitle lookup is manual only in this fork. Playback and startup never trigger subtitle searches or downloads. Existing embedded or sidecar subtitles remain available. The player volume control and mpv maximum both extend to 300%.
+
+There is no app auto-updater or startup version check. Updates require an explicit manual installation. The application starts at its saved local-folder thumbnail library before playback; no online metadata account is needed.
 
 **Find subtitles online** opens an in-app results dialog. The title is derived from the filename, including year or season/episode. **Find and load best** downloads and selects the strongest release match; each result can also be downloaded individually. Ambiguous titles are shown for selection instead of guessing a different film. Weak release matches remain available for manual selection. There is no browser download step.
 

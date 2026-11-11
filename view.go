@@ -285,9 +285,8 @@ func (a *app) settingsView(c *ui.Context) {
 			})
 			ui.Column(c).FillWidth().Background(t.Surface).Radius(12).Padding(d.panel).Gap(d.gap).Children(func() {
 				ui.Text(c, "Subtitles").FontSize(16).Bold()
-				ui.Checkbox(c, &a.autoSubtitles, "Automatically find and load subtitles").OnChange(a.subtitlePreferencesChanged)
 				ui.Select(c, &a.subtitleLanguage, subtitleLanguages).Label("Preferred subtitle language").Width(240).OnChange(a.subtitlePreferencesChanged)
-				ui.Text(c, "Uses existing captions first, then downloads a matching subtitle when available.").TextColor(t.TextMuted)
+				ui.Text(c, "Online subtitles are searched only when you request them.").TextColor(t.TextMuted)
 			})
 			a.subtitleAppearanceView(c)
 		})
@@ -341,7 +340,7 @@ func (a *app) playbackControls(c *ui.Context) {
 		})
 		ui.Row(c).FillWidth().AlignItems(ui.Center).Gap(8).Children(func() {
 			icon(c, "volume", "Mute").OnClick(func() { a.send("cycle", "mute") })
-			ui.Slider(c.Key("volume"), &a.volume, 0, 100).Width(88).Label("Volume").OnChange(func() { a.send("set_property", "volume", a.volume) })
+			ui.Slider(c.Key("volume"), &a.volume, 0, 300).Width(88).Label("Volume").OnChange(func() { a.send("set_property", "volume", a.volume) })
 			ui.Spacer(c)
 			icon(c, "back", "Previous video").Disabled(a.current <= 0).OnClick(func() { a.play(a.current - 1) })
 			a.chapterStepButton(c, -1)

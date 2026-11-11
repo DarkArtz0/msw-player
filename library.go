@@ -26,7 +26,6 @@ type preferences struct {
 	Dark             bool                `json:"dark"`
 	Density          string              `json:"density,omitempty"`
 	History          map[string]bookmark `json:"history,omitempty"`
-	AutoSubtitles    *bool               `json:"autoSubtitles,omitempty"`
 	SubtitleLanguage string              `json:"subtitleLanguage,omitempty"`
 	SubtitleStyle    *subtitleAppearance `json:"subtitleStyle,omitempty"`
 }
@@ -83,9 +82,8 @@ func (a *app) persist() {
 		for path, b := range a.history {
 			history[path] = b
 		}
-		auto := a.autoSubtitles
 		style := a.subtitleStyle
-		p := preferences{Folders: append([]string(nil), a.folders...), Dark: a.dark, Density: a.density, History: history, AutoSubtitles: &auto, SubtitleLanguage: a.subtitleLanguage, SubtitleStyle: &style, GroupByFolder: a.groupByFolder}
+		p := preferences{Folders: append([]string(nil), a.folders...), Dark: a.dark, Density: a.density, History: history, SubtitleLanguage: a.subtitleLanguage, SubtitleStyle: &style, GroupByFolder: a.groupByFolder}
 		select {
 		case a.store.jobs <- p:
 		default:

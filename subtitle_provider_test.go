@@ -167,16 +167,15 @@ func TestSubtitleRateLimitAndCancellation(t *testing.T) {
 		t.Fatal(err)
 	}
 }
-func TestAutomaticCaptionsRespectUserChoice(t *testing.T) {
+func TestCaptionsRequireUserRequest(t *testing.T) {
 	a := newApp()
 	a.current = 0
 	a.queue = []string{"Film.mkv"}
 	a.engine = &player{commands: make(chan []any, 16), cancel: func() {}}
 	a.status = playback{Loaded: true, TrackJSON: `[{"id":2,"type":"sub","lang":"eng"},{"id":3,"type":"sub","lang":"fra"}]`}
 	a.subtitleTick()
-	command := <-a.engine.commands
-	if command[0] != "set_property" || command[2] != 2 || !a.online.AutoChecked {
-		t.Fatal(command)
+	if len(a.engine.commands) != 0 || a.online.AutoChecked || a.subtitleService != nil {
+		t.Fatal("playback started automatic subtitle work")
 	}
 	a.chooseSubtitle("no")
 	before := len(a.engine.commands)
